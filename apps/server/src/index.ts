@@ -34,7 +34,7 @@ app.use("/*", requestIdMiddleware);
 app.onError(errorHandler);
 
 app.use("/*", cors(
-  process.env.NODE_ENV === "production"
+  process.env.NODE_ENV === "production" && process.env.ALLOWED_ORIGIN
     ? { origin: process.env.ALLOWED_ORIGIN, credentials: true }
     : {}
 ));
