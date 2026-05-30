@@ -1,6 +1,6 @@
 import { date, index, integer, pgTable, smallint, uuid } from "drizzle-orm/pg-core";
 import { employees } from "./users";
-import { routes } from "./routes";
+import { routes, routeStops } from "./routes";
 import { shiftSchedules } from "./shifts";
 import { rosterTripStatusEnum } from "./enums";
 import { savedLocations } from "./saved_locations";
@@ -14,6 +14,8 @@ export const rosterBookings = pgTable(
       .references(() => employees.id),
     pickupLocationId: integer("pickup_location_id").references(() => savedLocations.id),
     dropoffLocationId: integer("dropoff_location_id").references(() => savedLocations.id),
+    pickupStopId: integer("pickup_stop_id").references(() => routeStops.id),
+    dropoffStopId: integer("dropoff_stop_id").references(() => routeStops.id),
     shiftScheduleId: integer("shift_schedule_id")
       .notNull()
       .references(() => shiftSchedules.id),

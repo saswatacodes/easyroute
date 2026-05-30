@@ -28,6 +28,7 @@ export const routeStops = pgTable(
     location: geometry({ type: "point", mode: "xy", srid: 4326 }).notNull(),
     sequence: integer().notNull(),
     estimatedMinutesFromPrev: integer("estimated_minutes_from_prev"),
+    isOffice: boolean("is_office").notNull().default(false),
   },
   (t) => [
     index("route_stops_route_id_idx").on(t.routeId),

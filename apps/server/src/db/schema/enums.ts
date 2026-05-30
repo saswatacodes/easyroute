@@ -4,7 +4,10 @@ export const userRoleEnum = pgEnum("user_role", ["employee", "driver", "admin"])
 
 export const tripStatusEnum = pgEnum("trip_status", [
   "scheduled",
+  "en_route",
+  "at_pickup",
   "ongoing",
+  "completed",
   "cancelled",
 ]);
 
@@ -41,3 +44,5 @@ export const disputeStatusEnum = pgEnum("dispute_status", [
 ]);
 
 export const tripSourceEnum = pgEnum("trip_source", ["roster", "adhoc"]);
+
+export const tripTypeEnum = pgEnum("trip_type", ["login_trip", "logout_trip"]);

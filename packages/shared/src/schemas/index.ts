@@ -9,3 +9,6 @@ export * from "./driver";
 export * from "./notifications";
 export * from "./saved-locations";
 export * from "./admin";
+export * from "./shifts";
+export * from "./disputes";
+export * from "./vehicles";

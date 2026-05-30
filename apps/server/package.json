@@ -12,22 +12,23 @@
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
-    "db:seed": "bun run src/db/seed.ts"
+    "db:seed": "bun run src/db/seed.ts",
+    "test": "bun test",
+    "test:watch": "bun test --watch"
   },
   "dependencies": {
-    "drizzle-orm": "^1.0.0-beta.2",
-    "hono": "^4.7.0",
-    "postgres": "^3.4.5",
     "@hono/zod-validator": "^0.4.0",
-    "zod": "^3.24.0",
-    "bcryptjs": "^2.4.3",
-    "jsonwebtoken": "^9.0.2"
+    "@node-rs/argon2": "^2.0.2",
+    "drizzle-orm": "^0.45.2",
+    "hono": "^4.7.0",
+    "jsonwebtoken": "^9.0.2",
+    "postgres": "^3.4.5",
+    "zod": "^3.24.0"
   },
   "devDependencies": {
-    "drizzle-kit": "^1.0.0-beta.2",
     "@types/bun": "latest",
-    "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.7",
+    "drizzle-kit": "^0.31.10",
     "typescript": "~5.9.2"
   }
 }

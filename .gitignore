@@ -42,8 +42,10 @@ yarn-error.*
 
 # project documentation
 SUMMARY.md
+CLAUDE.md
 AGENTS.md
 .claude
+easyroute-design
 
 # Turborepo
 .turbo/

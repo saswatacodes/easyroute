@@ -1,6 +1,8 @@
 import { z } from "zod";
 
-export const tripStatusSchema = z.enum(["scheduled", "ongoing", "cancelled"]);
+export const tripStatusSchema = z.enum(["scheduled", "en_route", "at_pickup", "ongoing", "completed", "cancelled"]);
+
+export const tripTypeSchema = z.enum(["login_trip", "logout_trip"]);
 
 export const tripSchema = z.object({
   id: z.number(),
@@ -9,19 +11,33 @@ export const tripSchema = z.object({
   vehicleId: z.number().nullable(),
   scheduledDate: z.string(),
   status: tripStatusSchema,
+  type: tripTypeSchema,
   source: z.enum(["roster", "adhoc"]),
   sourceId: z.string().nullable(),
+  createdAt: z.string().nullable().optional(),
 });
 
 export const tripPassengerSchema = z.object({
   employeeId: z.number(),
   stopId: z.number().nullable(),
+  loginTime: z.string().nullable(),
+  logoutTime: z.string().nullable(),
   boardedAt: z.string().nullable(),
   droppedAt: z.string().nullable(),
 });
 
+export const tripStopSchema = z.object({
+  id: z.number(),
+  stopId: z.number().nullable(),
+  sequence: z.number(),
+  type: z.string(),
+  scheduledArrival: z.string().nullable(),
+  actualArrival: z.string().nullable(),
+});
+
 export const tripDetailSchema = tripSchema.extend({
   passengers: z.array(tripPassengerSchema),
+  tripStops: z.array(tripStopSchema),
 });
 
 export const tripListQuerySchema = z.object({
