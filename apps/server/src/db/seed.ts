@@ -60,24 +60,27 @@ if (!drvProfile[0]) {
 }
 
 // Shift schedule
+const monToFri = 2 + 4 + 8 + 16 + 32; // 62
+const allDays = 1 + 2 + 4 + 8 + 16 + 32 + 64; // 127
+
 const shiftRows = await db.select({ id: shiftSchedules.id }).from(shiftSchedules).limit(1);
 let shiftId = shiftRows[0]?.id;
 if (!shiftId) {
   const [s] = await db
     .insert(shiftSchedules)
-    .values({ name: "Morning", startTime: "09:00", endTime: "17:00" })
+    .values({ name: "Morning", startTime: "09:00", endTime: "17:00", daysOfWeek: monToFri })
     .returning({ id: shiftSchedules.id });
   shiftId = s.id;
 }
 
 const eveningShiftRows = await db.select({ id: shiftSchedules.id }).from(shiftSchedules).where(sql`${shiftSchedules.name} = 'Evening'`).limit(1);
 if (!eveningShiftRows[0]) {
-  await db.insert(shiftSchedules).values({ name: "Evening", startTime: "14:00", endTime: "22:00" }).returning({ id: shiftSchedules.id });
+  await db.insert(shiftSchedules).values({ name: "Evening", startTime: "14:00", endTime: "22:00", daysOfWeek: monToFri }).returning({ id: shiftSchedules.id });
 }
 
 const nightShiftRows = await db.select({ id: shiftSchedules.id }).from(shiftSchedules).where(sql`${shiftSchedules.name} = 'Night'`).limit(1);
 if (!nightShiftRows[0]) {
-  await db.insert(shiftSchedules).values({ name: "Night", startTime: "22:00", endTime: "06:00" }).returning({ id: shiftSchedules.id });
+  await db.insert(shiftSchedules).values({ name: "Night", startTime: "22:00", endTime: "06:00", daysOfWeek: allDays }).returning({ id: shiftSchedules.id });
 }
 
 // Route

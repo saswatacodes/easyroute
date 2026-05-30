@@ -691,23 +691,31 @@ Response 200:
     {
       "id": number,
       "name": string,
-      "startTime": string,   // HH:MM
-      "endTime": string      // HH:MM
+      "startTime": string,     // HH:MM
+      "endTime": string,       // HH:MM
+      "daysOfWeek": number     // bitmask
     }
   ]
 }
 ```
 
 Seed shifts:
-- Morning: `09:00–17:00`
-- Evening: `14:00–22:00`
-- Night: `22:00–06:00`
+- Morning: `09:00–17:00` (weekdays, bitmask 62)
+- Evening: `14:00–22:00` (weekdays, bitmask 62)
+- Night: `22:00–06:00` (all days, bitmask 127)
+
+**daysOfWeek bitmask:** Sun=1, Mon=2, Tue=4, Wed=8, Thu=16, Fri=32, Sat=64. Sum for multiple days. E.g. Mon-Fri = 2+4+8+16+32 = 62.
 
 ### POST /shifts
 
 ```
 Auth: requireAuth + requireRole("admin")
-Body: { "name": string, "startTime": string (HH:MM), "endTime": string (HH:MM) }
+Body: {
+  "name": string,
+  "startTime": string (HH:MM),
+  "endTime": string (HH:MM),
+  "daysOfWeek"?: number (0-127, default 62)
+}
 Response 201: { /* full shift object */ }
 ```
 
@@ -715,7 +723,12 @@ Response 201: { /* full shift object */ }
 
 ```
 Auth: requireAuth + requireRole("admin")
-Body: { "name"?: string, "startTime"?: string, "endTime"?: string }
+Body: {
+  "name"?: string,
+  "startTime"?: string,
+  "endTime"?: string,
+  "daysOfWeek"?: number
+}
 Response 200: { /* updated shift object */ }
 ```
 

@@ -5,18 +5,24 @@ import { AppError, ErrorCode } from "@/lib/errors";
 
 export async function listShifts() {
   const rows = await db
-    .select({ id: shiftSchedules.id, name: shiftSchedules.name, startTime: shiftSchedules.startTime, endTime: shiftSchedules.endTime })
+    .select({
+      id: shiftSchedules.id,
+      name: shiftSchedules.name,
+      startTime: shiftSchedules.startTime,
+      endTime: shiftSchedules.endTime,
+      daysOfWeek: shiftSchedules.daysOfWeek,
+    })
     .from(shiftSchedules)
     .orderBy(shiftSchedules.name);
   return { items: rows };
 }
 
-export async function createShift(data: { name: string; startTime: string; endTime: string }) {
+export async function createShift(data: { name: string; startTime: string; endTime: string; daysOfWeek?: number }) {
   const [row] = await db.insert(shiftSchedules).values(data).returning();
   return row;
 }
 
-export async function updateShift(id: number, data: { name?: string; startTime?: string; endTime?: string }) {
+export async function updateShift(id: number, data: { name?: string; startTime?: string; endTime?: string; daysOfWeek?: number }) {
   const existing = await db.select().from(shiftSchedules).where(eq(shiftSchedules.id, id)).limit(1);
   if (!existing[0]) throw new AppError(ErrorCode.NOT_FOUND, "Shift not found");
   const [row] = await db.update(shiftSchedules).set(data).where(eq(shiftSchedules.id, id)).returning();
