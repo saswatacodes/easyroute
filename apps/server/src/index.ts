@@ -141,14 +141,3 @@ startCronJobs();
 
 export { websocket };
 export default app;
-
-if (import.meta.main) {
-  const port = parseInt(process.env.PORT || "3000", 10);
-  console.log(`Starting server on port ${port}...`);
-  Bun.serve({
-    fetch: app.fetch,
-    port,
-    websocket,
-  });
-  console.log(`Server running on http://0.0.0.0:${port}`);
-}
