@@ -8,7 +8,7 @@ import { validateSessionToken } from "./auth";
 
 export async function sessionMiddleware(c: Context<AppEnv>, next: Next) {
   if (process.env.NODE_ENV === "dev") {
-    c.set("userId", "dev-user-id");
+    c.set("userId", "1");
     c.set("role", "admin");
     return next();
   }

@@ -47,7 +47,7 @@ export async function createBooking(userId: number, data: CreateRosterBookingDat
         eq(rosterBookings.shiftScheduleId, data.shiftScheduleId),
         ne(rosterBookings.status, "cancelled"),
         sql`${data.effectiveFrom}::date <= COALESCE(${rosterBookings.effectiveUntil}, '9999-12-31')`,
-        sql`COALESCE(${effectiveUntil}, '9999-12-31') >= ${rosterBookings.effectiveFrom}`,
+        sql`COALESCE(${effectiveUntil}::date, '9999-12-31') >= ${rosterBookings.effectiveFrom}`,
       ),
     )
     .limit(1);
